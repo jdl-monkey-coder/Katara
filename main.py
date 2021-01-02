@@ -93,9 +93,36 @@ async def fact(ctx):
 
 #The 'wrapper', I guess for g_image_puller.py - See the module in my WebFuncs repo 
 @client.command()    
-async def pullGoogleImage(ctx, image):
+async def image(ctx, image):
     result = google_image(image)
     await ctx.send(webbrowser.open(result))
+    
+@client.command()
+async def meme(ctx):
+    meme = google_image('meme')
+    await ctx.send('A meme from the internet (probably rly bad, sry): ' + meme)
+
+#full credit goes to ᴶᵉˢˢ#8302 for the get_meme command
+@client.command()
+async def get_meme(ctx, amount=1):
+    viewed = []
+    count = 0
+    with requests.session() as s:
+        headers = {
+                   "user-agent": "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.75 Safari/537.36"}
+        for x in range(amount):
+            url =  "https://www.memecenter.com"
+            data = s.get(url, headers=headers).text
+            count +=1
+            find_meme_url = re.search("<a href=\"(.*?)\" class=\"hvm-d-item random\">Surprise Me!</a>", data).group(1)
+            find_meme_image = s.get(find_meme_url, headers=headers).text
+            try:
+                img = re.search("<a href=\"(.*?)\" rel=\"nofollow\"", find_meme_image).group(1)
+                if img not in viewed:
+                   viewed.append(img)
+            except: pass
+            
+        await ctx.send(viewed[0])
     
 #fake token
 client.run('Nzg5MTUxOTc5MjgwMTM4MjYw.X9t5DQ.Jf1KSaP5zhtzk5ox1vsBCYc6cxs')
