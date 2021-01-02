@@ -88,5 +88,5 @@ async def fact(ctx):
     await ctx.send(re.search('<div id=\'z\'>(.*?).<br/><br/>',
            requests.get('http://randomfactgenerator.net/').text).group(1))
 
-
+#fake token
 client.run('Nzg5MTUxOTc5MjgwMTM4MjYw.X9t5DQ.Jf1KSaP5zhtzk5ox1vsBCYc6cxs')
