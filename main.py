@@ -1,12 +1,15 @@
 import asyncio
 import random
 import re
+import webbrowser
 
 import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
 from discord.ext import tasks
 import requests
+
+import g_image_puller
 
 client = commands.Bot(command_prefix = 'm.', case_insensitive=True)
 
@@ -41,7 +44,7 @@ async def on_member_join(member):
 async def on_member_remove(member):
     print(f'{member} has left the server...')
 
-@client.command(alias=['yeet'])
+@client.command()
 async def ping(ctx):
     await ctx.send(f'My ping is {client.latency}!')
     
@@ -88,5 +91,11 @@ async def fact(ctx):
     await ctx.send(re.search('<div id=\'z\'>(.*?).<br/><br/>',
            requests.get('http://randomfactgenerator.net/').text).group(1))
 
+#The 'wrapper', I guess for g_image_puller.py - See the module in my WebFuncs repo 
+@client.command()    
+async def pullGoogleImage(ctx, image):
+    result = google_image(image)
+    await ctx.send(webbrowser.open(result))
+    
 #fake token
 client.run('Nzg5MTUxOTc5MjgwMTM4MjYw.X9t5DQ.Jf1KSaP5zhtzk5ox1vsBCYc6cxs')
