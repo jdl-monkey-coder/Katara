@@ -10,7 +10,7 @@ from discord.ext import tasks
 
 client = commands.Bot(command_prefix = 'm.', case_insensitive=True)
 
-#a few simple commands and events
+#a few simple commands and events - note that the token is fake
 
 @client.event
 async def on_ready():
