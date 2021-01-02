@@ -34,7 +34,7 @@ async def hiya(ctx):
     
 @client.command()
 async def count(ctx):
-    for i in range(1, 11):
+    for i in range(1, 6):
         await ctx.send(i, ' potato')
 
 @client.command()
