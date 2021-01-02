@@ -27,5 +27,9 @@ async def on_member_remove(member):
 @client.command(alias=['yeet'])
 async def ping(ctx):
     await ctx.send(f'My ping is {client.latency}!')
+    
+@client.command()
+async def hiya(ctx):
+    await ctx.send('hey')
 
 client.run('Nzg5MTUxOTc5MjgwMTM4MjYw.X9t5DQ.L7c3iLvDNdIfp-T35G6kF8nNtVE')
