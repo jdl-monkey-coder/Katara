@@ -1,2 +1,2 @@
 # Monkey-Bot
-A --bad-- fully functional bot in Python
+**A fully functional bot in Python**
