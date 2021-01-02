@@ -1,12 +1,12 @@
-import asyncio 
+import asyncio
+import random
+import re
 
 import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
 from discord.ext import tasks
-
-
-
+import requests
 
 client = commands.Bot(command_prefix = 'm.', case_insensitive=True)
 
@@ -15,6 +15,23 @@ client = commands.Bot(command_prefix = 'm.', case_insensitive=True)
 @client.event
 async def on_ready():
     print('I AM READY!')
+    
+#full credit goes to ᴶᵉˢˢ#8302 for the clear command
+@client.command()
+async def clear(ctx, user: discord.User, count: int):
+   tmp = []
+   if count > 50:
+      maxDel = "The clear limit is 50 messages."
+      e = discord.Embed()
+      e.add_field(name="Clear limit.", value=maxDel, inline=False)
+      await ctx.send(embed=e)
+      return
+   async for message in ctx.channel.history(limit=500):
+      _user = message.author
+      if _user == user:
+         tmp.append(message)
+   for delete in range(count+1):
+      await tmp.pop(0).delete()
 
 @client.event
 async def on_member_join(member):
@@ -35,7 +52,7 @@ async def hiya(ctx):
 @client.command()
 async def count(ctx):
     for i in range(1, 6):
-        await ctx.send(i, ' potato')
+        await ctx.send(f'{i} potato')
 
 @client.command()
 async def countdown(ctx):
@@ -50,7 +67,7 @@ async def countdown(ctx):
         await ctx.send(random.choice(holidays))
         
 @client.command()
-async def fact(ctx):
+async def pfact(ctx):
     #the following facts were taken from https://data-flair.training/blogs/facts-about-python-programming/ - Check it out!!
     pyfacts = ['''PYTHON WAS A HOBBY PROJECT - In December 1989, Python’s creator Guido Van Rossum was looking for a hobby project to keep him occupied in the week around Christmas.
                He had been thinking of writing a new scripting language that’d be a descendant of ABC and also appeal to Unix/C hackers. He chose to call it Python.''', '''WHY IT WAS CALLED PYTHON - The language’s name isn’t about snakes, but about the popular
@@ -65,4 +82,11 @@ Out of 10, 6 parents preferred their children to learn Python over French. One o
                '''IDLE AS A CALCULATOR - Many people use the IDLE as a calculator. To get the value/result of the last expression, use an underscore.''']
     await ctx.send(random.choice(pyfacts))
 
-client.run('Nzg5MTUxOTc5MjgwMTM4MjYw.X9t5DQ.L7c3iLvDNdIfp-T35G6kF8nNtVE')
+#full credit goes to ᴶᵉˢˢ#8302 for the fact command
+@client.command()
+async def fact(ctx):
+    await ctx.send(re.search('<div id=\'z\'>(.*?).<br/><br/>',
+           requests.get('http://randomfactgenerator.net/').text).group(1))
+
+
+client.run('Nzg5MTUxOTc5MjgwMTM4MjYw.X9t5DQ.Jf1KSaP5zhtzk5ox1vsBCYc6cxs')
