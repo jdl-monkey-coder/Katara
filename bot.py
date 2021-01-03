@@ -20,15 +20,6 @@ client = commands.Bot(command_prefix = 'm.', case_insensitive=True)
 async def on_ready():
     print('I AM READY!')
     
-
-@client.event
-async def didjupingme(message):
-    random_pings = ['Why did u ping me for no reason lol', 'Do you want something??', 'Oh, so you think it\'s funny to ping me for no reason, eh??']
-    if message.content == f"<@!client.user.id>":
-        await message.channel.send(random.choice(random_pings))
-    elif f"<@!client.user.id>" in message.content:
-        await message.channel.send('Hi. Thanks for pinging me.')
-    
     
 @client.command()
 async def clear(ctx, user: discord.User, count: int):
