@@ -9,7 +9,8 @@ from discord.ext import commands
 from discord.ext import tasks
 import requests
 
-import g_image_puller
+from g_image_puller import *
+from commands import *
 
 client = commands.Bot(command_prefix = 'm.', case_insensitive=True)
 
