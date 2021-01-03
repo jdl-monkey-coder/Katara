@@ -1,6 +1,7 @@
 import re
 import os
 import webbrowser
+import random
 
 from discord.ext import commands
 import requests
