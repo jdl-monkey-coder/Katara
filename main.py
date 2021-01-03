@@ -13,7 +13,7 @@ import g_image_puller
 
 client = commands.Bot(command_prefix = 'm.', case_insensitive=True)
 
-#a few simple commands and events - note that the token is fake
+#a few simple commands and events
 
 @client.event
 async def on_ready():
