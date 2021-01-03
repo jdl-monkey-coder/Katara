@@ -124,5 +124,5 @@ async def get_meme(ctx, amount=1):
             
         await ctx.send(viewed[0])
     
-#fake token
-client.run('Nzg5MTUxOTc5MjgwMTM4MjYw.X9t5DQ.Jf1KSaP5zhtzk5ox1vsBCYc6cxs')
+
+client.run('t')
