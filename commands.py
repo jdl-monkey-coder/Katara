@@ -63,4 +63,18 @@ async def get_meme(ctx, amount=1):
                    viewed.append(img)
             except: pass
             
+            
+@client.command()
+async def eightball(ctx, question):
+    eightball_rsp = ['no, just no',
+                 'yes, absoLUTEly',
+                 'eh... I don\'t think so!',
+                 'Go for it!', 'yesss',
+                 'nonono DO NOT DO THAT',
+                 'think again!',
+                 'yes, do it!!']
+    await ctx.send(random.choice(eightball_rsp))
+            
         await ctx.send(viewed[0])
+       
+    
