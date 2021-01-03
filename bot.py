@@ -14,7 +14,7 @@ from commands import *
 
 client = commands.Bot(command_prefix = 'm.', case_insensitive=True)
 
-#a few simple commands and events
+#a few sample commands and events
 
 @client.event
 async def on_ready():
