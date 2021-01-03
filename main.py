@@ -19,7 +19,7 @@ client = commands.Bot(command_prefix = 'm.', case_insensitive=True)
 async def on_ready():
     print('I AM READY!')
     
-#full credit goes to ᴶᵉˢˢ#8302 for the clear command
+    
 @client.command()
 async def clear(ctx, user: discord.User, count: int):
    tmp = []
@@ -35,27 +35,33 @@ async def clear(ctx, user: discord.User, count: int):
          tmp.append(message)
    for delete in range(count+1):
       await tmp.pop(0).delete()
+        
 
 @client.event
 async def on_member_join(member):
     print(f'{member} has joined the server!')
+    
 
 @client.event
 async def on_member_remove(member):
     print(f'{member} has left the server...')
+    
 
 @client.command()
 async def ping(ctx):
     await ctx.send(f'My ping is {client.latency}!')
     
+    
 @client.command()
 async def hiya(ctx):
     await ctx.send('hey')
+    
     
 @client.command()
 async def count(ctx):
     for i in range(1, 6):
         await ctx.send(f'{i} potato')
+        
 
 @client.command()
 async def countdown(ctx):
@@ -68,6 +74,7 @@ async def countdown(ctx):
     holidays = ['Happy Thanksgiving!', 'Happy Hanukkah!', 'Merry Christmas!', 'Happy New Year!']
     for holiday in holidays:
         await ctx.send(random.choice(holidays))
+        
         
 @client.command()
 async def pfact(ctx):
@@ -84,12 +91,13 @@ It will also let you assign values to multiple variables at once.''', '''YAY, AN
 Out of 10, 6 parents preferred their children to learn Python over French. One of my favorite facts about Python programming.''',
                '''IDLE AS A CALCULATOR - Many people use the IDLE as a calculator. To get the value/result of the last expression, use an underscore.''']
     await ctx.send(random.choice(pyfacts))
+    
 
-#full credit goes to ᴶᵉˢˢ#8302 for the fact command
 @client.command()
 async def fact(ctx):
     await ctx.send(re.search('<div id=\'z\'>(.*?).<br/><br/>',
            requests.get('http://randomfactgenerator.net/').text).group(1))
+    
 
 #The 'wrapper', I guess for g_image_puller.py - See the module in my WebFuncs repo 
 @client.command()    
@@ -97,12 +105,13 @@ async def image(ctx, image):
     result = google_image(image)
     await ctx.send(webbrowser.open(result))
     
+    
 @client.command()
 async def meme(ctx):
     meme = google_image('meme')
     await ctx.send('A meme from the internet (probably rly bad, sry): ' + meme)
+    
 
-#full credit goes to ᴶᵉˢˢ#8302 for the get_meme command
 @client.command()
 async def get_meme(ctx, amount=1):
     viewed = []
@@ -125,4 +134,5 @@ async def get_meme(ctx, amount=1):
         await ctx.send(viewed[0])
     
 
+    
 client.run('t')
