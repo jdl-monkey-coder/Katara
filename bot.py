@@ -73,8 +73,7 @@ async def countdown(ctx):
     await ctx.send('1')
     await asyncio.sleep(1)
     holidays = ['Happy Thanksgiving!', 'Happy Hanukkah!', 'Merry Christmas!', 'Happy New Year!']
-    for holiday in holidays:
-        await ctx.send(random.choice(holidays))
+    await ctx.send(random.choice(holidays))
 
     
 client.run('t')
