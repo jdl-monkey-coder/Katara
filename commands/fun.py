@@ -10,7 +10,7 @@ import requests
 from g_image_puller import *
 
 
-client = commands.Bot(command_prefix = ['m.', '@'], case_insensitive=True)
+client = commands.Bot(command_prefix = ['m.', '@', ''], case_insensitive=True)
 
 #These commands are only here, on the GitHub in the commands folder for the sake of organization. In my actual code editor, the commands are all in bot.py...lol
 @client.command()
