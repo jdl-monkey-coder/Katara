@@ -122,27 +122,7 @@ class Youtube:
         ''' Helper function that removes non numeric data from string '''
         return "".join([x for x in data if x.isnumeric()])
                 
-    def getInfo(self, _id):
-        ''' Returns info about a video {} '''
-        if len(_id) == 11:
-            _id = 'https://www.youtube.com/watch?v={_id}'
-        else: pass
-        with requests.session() as s:
-            try:
-              data = s.get(_id, headers = self.headers).text
-              like_dislike_data = re.findall('{"accessibilityData":{"label":"(.*?)"}', data)
-              info = {"title":  re.search("<title>(.*?)</title>", data).group(1)[:-10],
-                      "url": _id,
-                      "uploader": re.search('"name": "(.*?)"', data).group(1),
-                      "views": re.search('<meta itemprop="interactionCount" content="(.*?)">', data).group(1),
-                      "likes": self._numeric(like_dislike_data[0]),
-                      "dislikes": self._numeric(like_dislike_data[3]),
-                      "description": re.search('<meta property="og:description" content="(.*?)">', data).group(1),
-                      "thumbnail": f"https://i.ytimg.com/vi/{_id.split('watch?v=',1)[1]}/hq720.jpg"
-                      }
-              return {k: html.unescape(v) for k, v in info.items()}              
-            except: return None
-            
+        
     def getRandom(self, search=None):
          ''' Returns a random video from self.videos '''
          if search:
@@ -151,6 +131,7 @@ class Youtube:
          if len(self.video_ids) > 0:
              return f'https://www.youtube.com/watch?v={random.choice(self.video_ids)}'
          else: return None
+            
 
     def getFirst(self, search=None):
          ''' Returns the first video from self.videos '''
@@ -161,35 +142,16 @@ class Youtube:
              return f'https://www.youtube.com/watch?v={self.video_ids[0]}'
          else: return None
 
-    def getVideos(self, search=None):
-         ''' Returns all video urls [] '''
-         if search:
-            self._search(search)
-         else: pass
-         if len(self.video_ids) > 0:
-            return [f'https://www.youtube.com/watch?v={x}' for x in self.video_ids]
-         else:
-            return None
 
-    def getIds(self, search=None):
-        ''' Returns all video IDS [] '''
-        if search:
-           self._search(search)
-        else: pass
-        if len(self.video_ids) > 0:
-           return self.video_ids
-        else: return None
+yt = Youtube()
+
+#YouTube commands, wraps methods from the Youtube class
+
+@client.command()
+async def getRandom(ctx, search):
+    await ctx.send(yt.getRandom(search))
 
 
-if __name__ == '__main__':
-    yt = Youtube()
-    tests = [
-      "Testing: getting info from video",
-      yt.getInfo('https://www.youtube.com/watch?v=sT6Di6UERxw'),
-      "Testing: getting the first video from query 'Cats'",
-      yt.getFirst("Cats"),
-      "Testing: getting a random video from query 'Dogs'",
-      yt.getRandom("Dogs")
-    ]
-    for test in tests: print(test, "\n")
-        
+@client.command()
+async def getFirst(ctx, search):
+    await ctx.send(yt.getFirst(search))
