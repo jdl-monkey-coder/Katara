@@ -12,8 +12,6 @@ import requests
 from g_image_puller import *
 from commands import *
 
-client = commands.Bot(command_prefix = 'm.', case_insensitive=True)
-
 #a few sample commands and events
 
 @client.event
