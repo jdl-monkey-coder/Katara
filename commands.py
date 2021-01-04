@@ -78,3 +78,16 @@ async def eightball(ctx, question):
         await ctx.send(viewed[0])
        
     
+#TODO: UPDATE EVERY DAY
+@client.command()
+async def getRandomThing(ctx, lines: int):
+    randomThing = requests.get('https://automatetheboringstuff.com/files/rj.text')
+    await ctx.send(randomThing.text[:lines])
+
+
+@client.command()
+async def hi(ctx, name):
+    await ctx.send(f"hi, {name}!")
+    
+    
+    
