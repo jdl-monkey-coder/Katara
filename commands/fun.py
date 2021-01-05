@@ -10,7 +10,7 @@ import requests
 from g_image_puller import *
 
 
-client = commands.Bot(command_prefix = ['m.', '@', ''], case_insensitive=True)
+client = commands.Bot(command_prefix = ['@'], case_insensitive=True)
 
 #These commands are only here, on the GitHub in the commands folder for the sake of organization. In my actual code editor, the commands are all in bot.py...lol
 @client.command()
@@ -158,3 +158,53 @@ async def getRandom(ctx, search):
 @client.command()
 async def getFirst(ctx, search):
     await ctx.send(yt.getFirst(search))
+    
+    
+query = github()
+
+#GitHub commands
+
+@client.command()
+async def githubUser(ctx, user):
+    await ctx.send("\n".join([f"{k} : {v}" for k, v in query.getUser(user).items()]))
+
+
+@client.command()
+async def getGithubUserAvatar(ctx, user):
+    await ctx.send(query.getAvatar(user))
+
+    
+@client.command()
+async def getGithubUserUsername(ctx, user):
+    await ctx.send(query.getUsername(user))
+
+
+@client.command()
+async def getGithubUserFollowers(ctx, user):
+    await ctx.send(query.getFollowers(user))
+
+
+@client.command()
+async def getWhoGithubUserFollowing(ctx, user):
+    await ctx.send(query.getFollowing(user))
+
+
+@client.command()
+async def getGithubUserDescription(ctx, user):
+    await ctx.send(query.getDescription(user))
+    
+
+@client.command()
+async def getGithubUserRepoCount(ctx, user):
+    await ctx.send(query.get_repo_count(user))
+
+
+@client.command()
+async def getGithubUserUrl(ctx, user):
+    await ctx.send(query.getUrl(user))
+
+
+@client.command()
+async def getGithubUserLocation(ctx, user):
+    await ctx.send(query.getLocation(user))
+    
