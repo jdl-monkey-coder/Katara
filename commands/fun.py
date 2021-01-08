@@ -1,18 +1,25 @@
-import re
-import os
-import webbrowser
+import asyncio
 import random
+import re
+import webbrowser
+import os
 import html
 
+import discord
+from discord import Color
+from discord.ext.commands import Bot
 from discord.ext import commands
+from discord.ext import tasks
 import requests
 
+#all modules unrecognized are solely from my own device
 from g_image_puller import *
+from GitHubModule import github
+from YouTubeModule import Youtube
 
 
 client = commands.Bot(command_prefix = ['@'], case_insensitive=True)
 
-#These commands are only here, on the GitHub in the commands folder for the sake of organization. In my actual code editor, the commands are all in bot.py...lol
 @client.command()
 async def pfact(ctx):
     #the following facts were taken from https://data-flair.training/blogs/facts-about-python-programming/ - Check it out!!
@@ -21,7 +28,7 @@ async def pfact(ctx):
 British comedy troupe
 Monty Python (from the 1970s).
 Guido himself is a big fan of Monty Python’s Flying Circus. Being in a rather irreverent mood, he named the project ‘Python’. Isn’t it an interesting Python fact?''', '''NO BRACES AT ALL - Unlike Java and C++, Python does not use braces to delimit code.
-Indentation is mandatory with Python. If you choose to import it from the __future__ package, it gives you a witty error (Not a chance).''', 'MULTIPLE RETURN VALUES - In Python, a function can return more than one value as a tuple.', '''MULTIPLE ASSIGNMENTS IN ONE STATEMENT - Python will let you assign
+Indentation is mandatory with Python. If you choose to import it from the `__future__` package, it gives you a witty error (Not a chance).''', 'MULTIPLE RETURN VALUES - In Python, a function can return more than one value as a tuple.', '''MULTIPLE ASSIGNMENTS IN ONE STATEMENT - Python will let you assign
 the same value to multiple variables in one statement.
 It will also let you assign values to multiple variables at once.''', '''YAY, ANTIGRAVITY THAT\'S SO COOL! - If you get to the IDLE and type in import antigravity, it opens up a webpage with a comic about the antigravity module.''',
                '''PYTHON IS MORE POPULAR THAN FRENCH - According to a recent survey, in the UK in 2015, Python overtook French to be the most popular language taught in primary schools.
@@ -38,8 +45,8 @@ async def fact(ctx):
 
 @client.command()    
 async def image(ctx, image):
-    result = google_image(image)
-    await ctx.send(webbrowser.open(result))
+    img = google_image(image)
+    await ctx.send(os.system(f'start {img}'))
     await ctx.send('Check your web browser!')
 
 @client.command()
@@ -67,83 +74,51 @@ async def get_meme(ctx, amount=1):
                    viewed.append(img)
             except: pass
             
-            
-@client.command()
-async def eightball(ctx, question):
-    eightball_rsp = ['no, just no',
-                 'yes, absoLUTEly',
-                 'eh... I don\'t think so!',
-                 'Go for it!', 'yesss',
-                 'nonono DO NOT DO THAT',
-                 'think again!',
-                 'yes, do it!!']
-    await ctx.send(random.choice(eightball_rsp))
-            
         await ctx.send(viewed[0])
-       
-    
+
+
+@client.command()
+async def _8ball(ctx, *, question):
+    responses = ['It is certain',
+                 'It is decidedly so',
+                 'Without a doubt',
+                 'Yes - definitely',
+                 'You may rely on it',
+                 'As I see it, yes',
+                 'Most likely',
+                 'Outlook good',
+                 'Yes',
+                 'Signs point to yes',
+                 'Ask again later',
+                 'Cannot predict now',
+                 'Concentrate and ask again',
+                 'Don’t count on it',
+                 'Outlook not so good',
+                 'Reply hazy, try again',
+                 'Very doubtful',
+                 'My sources say no',
+                 'My reply is no',
+                 'Better not tell you now'
+                 ]
+
+    await ctx.send(random.choice(responses))
+
+
+@client.command()
+async def joke(ctx):
+    pass
+
+
 #TODO: UPDATE EVERY DAY
 @client.command()
 async def getRandomThing(ctx, lines: int):
-    randomThing = requests.get('https://automatetheboringstuff.com/files/rj.text')
+    randomThing = requests.get('https://goalkicker.com/JavaBook/')
     await ctx.send(randomThing.text[:lines])
 
 
 @client.command()
 async def hi(ctx, name):
     await ctx.send(f"hi, {name}!")
-    
-
-'''
-Youtube module that doesn't require an API Key.
-By: ᴶᵉˢˢ#8302
-
-NOTE: 
-There may be some bugs with Like/Dislike
-i'll fix it at some point.
-'''
-class Youtube:
-
-    def __init__(self):
-        self.headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36"}
-        self.video_ids = []
-    
-    def _search(self, query):
-        ''' Helper function for search requests '''
-        self.video_ids.clear()
-        with requests.session() as s:
-            try:
-              req = s.get(f'https://www.youtube.com/results?search_query={query}', headers = self.headers).text
-              for yid in [_id for _id in re.findall('i.ytimg.com/vi/(.*?)/', req) if len(_id) ==  11]:
-                  if yid not in self.video_ids:
-                      self.video_ids.append(yid)
-              return self.video_ids
-            except Exception as e:
-                print(f'Error: {e}')
-
-    def _numeric(self, data):
-        ''' Helper function that removes non numeric data from string '''
-        return "".join([x for x in data if x.isnumeric()])
-                
-        
-    def getRandom(self, search=None):
-         ''' Returns a random video from self.videos '''
-         if search:
-            self._search(search)
-         else: pass
-         if len(self.video_ids) > 0:
-             return f'https://www.youtube.com/watch?v={random.choice(self.video_ids)}'
-         else: return None
-            
-
-    def getFirst(self, search=None):
-         ''' Returns the first video from self.videos '''
-         if search:
-            self._search(search)
-         else: pass
-         if len(self.video_ids) > 0:
-             return f'https://www.youtube.com/watch?v={self.video_ids[0]}'
-         else: return None
 
 
 yt = Youtube()
@@ -158,53 +133,38 @@ async def getRandom(ctx, search):
 @client.command()
 async def getFirst(ctx, search):
     await ctx.send(yt.getFirst(search))
-    
-    
+
+
 query = github()
 
 #GitHub commands
 
+#avatar
+#followers
+#repo_count
+#organization
+#username
+#following
+#stars
+#website
+#name
+#description
+#location
+#joined:
+#url
+
+
+@client.command()
+async def github(ctx, user, key):
+   data = query.getUser(user)
+   if key in data:
+     await ctx.send(data[key])
+   else: await ctx.send("Invalid key")
+
+
 @client.command()
 async def githubUser(ctx, user):
     await ctx.send("\n".join([f"{k} : {v}" for k, v in query.getUser(user).items()]))
-
-
-@client.command()
-async def getGithubUserAvatar(ctx, user):
-    await ctx.send(query.getAvatar(user))
-
     
-@client.command()
-async def getGithubUserUsername(ctx, user):
-    await ctx.send(query.getUsername(user))
-
-
-@client.command()
-async def getGithubUserFollowers(ctx, user):
-    await ctx.send(query.getFollowers(user))
-
-
-@client.command()
-async def getWhoGithubUserFollowing(ctx, user):
-    await ctx.send(query.getFollowing(user))
-
-
-@client.command()
-async def getGithubUserDescription(ctx, user):
-    await ctx.send(query.getDescription(user))
-    
-
-@client.command()
-async def getGithubUserRepoCount(ctx, user):
-    await ctx.send(query.get_repo_count(user))
-
-
-@client.command()
-async def getGithubUserUrl(ctx, user):
-    await ctx.send(query.getUrl(user))
-
-
-@client.command()
-async def getGithubUserLocation(ctx, user):
-    await ctx.send(query.getLocation(user))
-    
+ 
+client.run('Nzg5MTUxOTc5MjgwMTM4MjYw.X9t5DQ.Tdc2aDWxwYLZZZPh28ZVLflJwWA')
