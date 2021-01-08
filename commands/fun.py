@@ -12,7 +12,6 @@ from discord.ext import commands
 from discord.ext import tasks
 import requests
 
-#all modules unrecognized are solely from my own device
 from g_image_puller import *
 from GitHubModule import github
 from YouTubeModule import Youtube
