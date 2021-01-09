@@ -166,4 +166,4 @@ async def githubUser(ctx, user):
     await ctx.send("\n".join([f"{k} : {v}" for k, v in query.getUser(user).items()]))
     
  
-client.run('Nzg5MTUxOTc5MjgwMTM4MjYw.X9t5DQ.Tdc2aDWxwYLZZZPh28ZVLflJwWA')
+client.run('nope')
