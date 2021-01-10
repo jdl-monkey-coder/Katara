@@ -1,4 +1,3 @@
-#Added comment
 import asyncio
 import random
 import re
