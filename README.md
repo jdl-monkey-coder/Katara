@@ -1,4 +1,4 @@
-# Monkey-Bot
+# Katara
 **A fully functional bot in Python**
 
 Invite link below:
