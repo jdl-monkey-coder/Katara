@@ -43,7 +43,7 @@ async def fact(ctx):
 
 
 @client.command()    
-async def image(ctx, image):
+async def image(ctx, * , image):
     img = google_image(image)
     await ctx.send(os.system(f'start {img}'))
     await ctx.send('Check your web browser!')
@@ -125,12 +125,12 @@ yt = Youtube()
 #YouTube commands, wraps methods from the Youtube class
 
 @client.command()
-async def getRandom(ctx, search):
+async def getRandom(ctx, * , search):
     await ctx.send(yt.getRandom(search))
 
 
 @client.command()
-async def getFirst(ctx, search):
+async def getFirst(ctx, * , search):
     await ctx.send(yt.getFirst(search))
 
 
@@ -154,7 +154,7 @@ query = github()
 
 
 @client.command()
-async def github(ctx, user, key):
+async def github(ctx, key, user):
    data = query.getUser(user)
    if key in data:
      await ctx.send(data[key])
@@ -164,6 +164,3 @@ async def github(ctx, user, key):
 @client.command()
 async def githubUser(ctx, user):
     await ctx.send("\n".join([f"{k} : {v}" for k, v in query.getUser(user).items()]))
-    
- 
-client.run('nope')
