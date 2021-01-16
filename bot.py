@@ -73,5 +73,8 @@ async def countdown(ctx):
     holidays = ['Happy Thanksgiving!', 'Happy Hanukkah!', 'Merry Christmas!', 'Happy New Year!']
     await ctx.send(random.choice(holidays))
 
+
     
-client.run('t')
+if __name__ == '__main__':
+    TOKEN = 'not found'
+    client.run(TOKEN)
