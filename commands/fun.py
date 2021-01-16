@@ -164,3 +164,7 @@ async def github(ctx, key, user):
 @client.command()
 async def githubUser(ctx, user):
     await ctx.send("\n".join([f"{k} : {v}" for k, v in query.getUser(user).items()]))
+    
+@client.command()
+async def say(ctx, * , whatToSay):
+    await ctx.send(whatToSay)
