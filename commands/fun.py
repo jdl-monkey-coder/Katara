@@ -12,9 +12,9 @@ from discord.ext import commands
 from discord.ext import tasks
 import requests
 
-from g_image_puller import *
-from GitHubModule import github
-from YouTubeModule import Youtube
+from external_modules.g_image_puller import *
+from external_modules.GitHubModule import github
+from external_modules.YouTubeModule import Youtube
 
 
 client = commands.Bot(command_prefix = ['@'], case_insensitive=True)
