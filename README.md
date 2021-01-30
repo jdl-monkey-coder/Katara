@@ -1,5 +1,5 @@
 # Katara
-**A fully functional Discord Bot written in Python**
+**A fully functional Discord Bot written in Python - This repository will no longer be receiving updates. DM me on Discord to join my server (Developer's Corner.).**
 
 Invite link below:
 
