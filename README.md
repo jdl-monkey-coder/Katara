@@ -5,4 +5,7 @@ Invite link below:
 
 `https://discord.com/oauth2/authorize?client_id=789151979280138260&permissions=2147483639&scope=bot`
 
-***1/3 of the credit for my work goes to ᴶᵉˢˢ#8302 - Great thanks to you***
+Link to my Discord Server:
+`https://discord.gg/yM5cDBYUxM`
+
+***ALSO... A SPECIAL THANK YOU TO ᴶᵉˢˢ#8302!!!!!!***
